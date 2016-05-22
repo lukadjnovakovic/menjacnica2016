@@ -43,7 +43,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem mntmAbout;
 	
 	//klasa na logickom nivou
-	protected Menjacnica sistem;
+	private static GUIKontroler guiKontroler;
 	protected JTable table;
 	
 	/**
@@ -68,7 +68,8 @@ public class MenjacnicaGUI extends JFrame {
 		contentPane.add(getScrollPane(), BorderLayout.CENTER);
 		contentPane.add(getPanel(), BorderLayout.EAST);
 		
-		sistem = new Menjacnica();
+		
+		guiKontroler.sistem = new Menjacnica();
 	}
 
 	private JScrollPane getScrollPane() {
@@ -167,7 +168,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmSave = new JMenuItem("Save");
 			mntmSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.sacuvajUFajl(sistem);
+					GUIKontroler.sacuvajUFajl(guiKontroler.sistem);
 				}
 			});mntmSave.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 			mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
@@ -211,7 +212,7 @@ public class MenjacnicaGUI extends JFrame {
 	
 	protected void prikaziSveValute() {
 		MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
-		model.staviSveValuteUModel(sistem.vratiKursnuListu());
+		model.staviSveValuteUModel(guiKontroler.sistem.vratiKursnuListu());
 
 	}
 

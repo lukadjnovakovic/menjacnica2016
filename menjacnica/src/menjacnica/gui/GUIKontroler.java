@@ -13,6 +13,7 @@ import menjacnica.gui.models.MenjacnicaTableModel;
 public class GUIKontroler {
 
 	private static MenjacnicaGUI glavniProzor;
+	protected static Menjacnica sistem;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,7 +38,7 @@ public class GUIKontroler {
 	}
 	
 	public static void prikaziDodajKursGUI() {
-		DodajKursGUI prozor = new DodajKursGUI(glavniProzor);
+		DodajKursGUI prozor = new DodajKursGUI();
 		prozor.setLocationRelativeTo(glavniProzor);
 		prozor.setVisible(true);
 	}
@@ -75,7 +76,7 @@ public class GUIKontroler {
 			valuta.setKupovni(kupovni);
 			valuta.setSrednji(srednji);
 			
-			glavniProzor.sistem.dodajValutu(valuta);
+			sistem.dodajValutu(valuta);
 			
 			glavniProzor.prikaziSveValute();
 		} catch (Exception e) {
@@ -87,7 +88,7 @@ public class GUIKontroler {
 	
 	public static void obrisiValutu(Valuta valuta) {
 		try{
-			glavniProzor.sistem.obrisiValutu(valuta);
+			sistem.obrisiValutu(valuta);
 			
 			glavniProzor.prikaziSveValute();
 			
@@ -100,7 +101,7 @@ public class GUIKontroler {
 	public static double izracunajIznos(Valuta valuta,boolean prodaja, double iznos){
 		try{
 			double konacniIznos = 
-					glavniProzor.sistem.izvrsiTransakciju(valuta,prodaja,iznos);
+					sistem.izvrsiTransakciju(valuta,prodaja,iznos);
 		return konacniIznos;
 		} catch (Exception e1) {
 		JOptionPane.showMessageDialog(glavniProzor, e1.getMessage(),
@@ -116,7 +117,7 @@ public class GUIKontroler {
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				glavniProzor.sistem.ucitajIzFajla(file.getAbsolutePath());
+				sistem.ucitajIzFajla(file.getAbsolutePath());
 				glavniProzor.prikaziSveValute();
 			}	
 		} catch (Exception e1) {
@@ -129,7 +130,7 @@ public static void prikaziObrisiKursGUI() {
 		
 		if (glavniProzor.table.getSelectedRow() != -1) {
 			MenjacnicaTableModel model = (MenjacnicaTableModel)(glavniProzor.table.getModel());
-			ObrisiKursGUI prozor = new ObrisiKursGUI(glavniProzor,
+			ObrisiKursGUI prozor = new ObrisiKursGUI(
 					model.vratiValutu(glavniProzor.table.getSelectedRow()));
 			prozor.setLocationRelativeTo(glavniProzor);
 			prozor.setVisible(true);
@@ -139,7 +140,7 @@ public static void prikaziObrisiKursGUI() {
 public static void prikaziIzvrsiZamenuGUI() {
 	if (glavniProzor.table.getSelectedRow() != -1) {
 		MenjacnicaTableModel model = (MenjacnicaTableModel)(glavniProzor.table.getModel());
-		IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(glavniProzor,
+		IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(
 				model.vratiValutu(glavniProzor.table.getSelectedRow()));
 		prozor.setLocationRelativeTo(glavniProzor);
 		prozor.setVisible(true);
